@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { THTTPError } from "../types";
+import { THTTPError } from "@repo/types";
 
 export default (
   err: THTTPError,
