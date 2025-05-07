@@ -1,0 +1,35 @@
+{
+  "name": "@repo/shared-utils",
+  "version": "0.0.0",
+  "description": "It holds the shared utility functions",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npx tsc",
+    "clean": "rm -rf dist",
+    "remove:pkg": "rm -rf node_modules",
+    "rebuild": "yarn run clean && yarn run remove:pkg && yarn install && pnpm build"
+  },
+  "keywords": [
+    "utils"
+  ],
+  "author": "Mayank Tiwari <devmayanktiwari@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@repo/types": "*",
+    "@repo/typescript-config": "*",
+    "colorette": "^2.0.20",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "winston": "^3.17.0",
+    "winston-mongodb": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0"
+  }
+}
