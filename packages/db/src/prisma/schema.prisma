@@ -6,3 +6,49 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Admin {
+  adminId       String   @default(cuid())
+  walletAddress String   @unique
+  createdAt     DateTime @default(now())
+}
+
+model Task {
+  taskId      Int          @id @default(autoincrement())
+  title       String
+  description String       @default("")
+  usersNeeded Int          @default(10)
+  totalReward Float        @default(0.0)
+  options     Option[] // Renamed to Option (singular)
+  submissions Submission[]
+  createdAt   DateTime     @default(now())
+}
+
+model User {
+  userId        String       @id @default(cuid())
+  walletAddress String       @unique
+  submissions   Submission[]
+  createdAt     DateTime     @default(now())
+}
+
+model Option {
+  id          Int          @id @default(autoincrement())
+  url         String
+  taskId      Int
+  task        Task         @relation(fields: [taskId], references: [taskId])
+  submissions Submission[]
+}
+
+model Submission {
+  submissionId Int      @id @default(autoincrement())
+  userId       String
+  user         User     @relation(fields: [userId], references: [userId])
+  taskId       Int
+  task         Task     @relation(fields: [taskId], references: [taskId])
+  optionId     Int
+  option       Option   @relation(fields: [optionId], references: [id])
+  submittedAt  DateTime @default(now())
+
+  @@unique([userId, taskId])
+  @@map("submissions")
+}
