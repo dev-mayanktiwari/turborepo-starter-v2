@@ -8,9 +8,12 @@ datasource db {
 }
 
 model Admin {
-  adminId       String   @default(cuid())
+  adminId       String   @id @default(cuid())
   walletAddress String   @unique
   createdAt     DateTime @default(now())
+  payout        Payout[]
+
+  @@map("admin")
 }
 
 model Task {
@@ -22,6 +25,8 @@ model Task {
   options     Option[] // Renamed to Option (singular)
   submissions Submission[]
   createdAt   DateTime     @default(now())
+
+  @@map("task")
 }
 
 model User {
@@ -29,6 +34,10 @@ model User {
   walletAddress String       @unique
   submissions   Submission[]
   createdAt     DateTime     @default(now())
+  pendingAmount Float        @default(0.0)
+  lockedAmount  Float        @default(0.0)
+
+  @@map("user")
 }
 
 model Option {
@@ -37,6 +46,19 @@ model Option {
   taskId      Int
   task        Task         @relation(fields: [taskId], references: [taskId])
   submissions Submission[]
+
+  @@map("option")
+}
+
+model Payout {
+  payoutId  Int       @id @default(autoincrement())
+  adminId   String
+  admin     Admin     @relation(fields: [adminId], references: [adminId])
+  amount    Float
+  status    TxnStatus @default(PENDING)
+  createdAt DateTime  @default(now())
+
+  @@map("payout")
 }
 
 model Submission {
@@ -50,5 +72,11 @@ model Submission {
   submittedAt  DateTime @default(now())
 
   @@unique([userId, taskId])
-  @@map("submissions")
+  @@map("submission")
+}
+
+enum TxnStatus {
+  PENDING
+  COMPLETED
+  FAILED
 }
