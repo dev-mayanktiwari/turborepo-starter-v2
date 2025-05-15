@@ -8,5 +8,6 @@ userRouter.get("/self", userController.self);
 userRouter.get("/health", userController.health);
 userRouter.get("/get-nonce", userController.getNonce);
 userRouter.get("/auth-check", authMiddleware, userController.authCheck);
+userRouter.post("/register", userController.register);
 
 export default userRouter;

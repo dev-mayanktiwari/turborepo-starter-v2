@@ -34,7 +34,10 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
       tokenValue,
       String(AppConfig.get("JWT_SECRET"))
     ) as CustomJwtPayload;
-    request.walletAddress = decodedToken.walletAddress;
+    request.publicKey = decodedToken.publicKey;
+    request.id = decodedToken.id;
+    request.type = decodedToken.type;
+    
     next();
   } catch (error) {
     if (error instanceof JsonWebTokenError) {

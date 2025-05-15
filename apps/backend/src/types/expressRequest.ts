@@ -1,5 +1,7 @@
 import { Request } from "express";
 
 export interface AuthenticatedRequest extends Request {
-  walletAddress?: string;
+  publicKey?: string;
+  id?: string;
+  type?: "user" | "admin";
 }

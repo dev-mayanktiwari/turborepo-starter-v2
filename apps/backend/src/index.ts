@@ -13,7 +13,12 @@ const app: Application = express();
 const PORT = AppConfig.get("PORT");
 
 // Middlewares
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    credentials: true,
+  })
+);
 app.use(helmet());
 app.use(cookieParser());
 app.use(express.json());

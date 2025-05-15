@@ -1,3 +1,5 @@
 export interface CustomJwtPayload {
-  walletAddress: string;
+  publicKey: string;
+  id: string;
+  type: "user" | "admin";
 }
